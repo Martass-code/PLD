@@ -35,14 +35,7 @@ begin
 BCD_counter_REG: PROCESS (clk) --vystupni registr
 BEGIN
   IF rising_edge(clk) THEN
-    --kdyz 0 tak zastavi cas na displeji (LAP mode)
-    IF (disp_enable = '1') THEN
-      cnt_0_reg <= cnt_0_next; --s hranou prepne next na reg vystup
-      cnt_1_reg <= cnt_1_next;
-      cnt_2_reg <= cnt_2_next;
-      cnt_3_reg <= cnt_3_next;
-    END IF;
-    
+      
     --vynulovani citace -synchronni reset 
     --mozna next state?
     IF cnt_reset = '1' THEN 
@@ -50,7 +43,22 @@ BEGIN
       cnt_1_reg <= (OTHERS => '0');
       cnt_2_reg <= (OTHERS => '0');
       cnt_3_reg <= (OTHERS => '0');
+    ELSE
+      cnt_0_reg <= cnt_0_next; --s hranou prepne next na reg vystup
+      cnt_1_reg <= cnt_1_next;
+      cnt_2_reg <= cnt_2_next;
+      cnt_3_reg <= cnt_3_next;
     END IF;
+    
+   --kdyz 0 tak zastavi cas na displeji (LAP mode) 
+    IF (disp_enable = '1') THEN
+      --ze signalu na vystup   
+      CNT_0 <= STD_LOGIC_VECTOR(cnt_0_reg);
+      CNT_1 <= STD_LOGIC_VECTOR(cnt_1_reg);
+      CNT_2 <= STD_LOGIC_VECTOR(cnt_2_reg);
+      CNT_3 <= STD_LOGIC_VECTOR(cnt_3_reg);
+    END IF;   
+    
   END IF;
 END PROCESS BCD_counter_REG;
 
@@ -104,11 +112,7 @@ BEGIN
   
 END PROCESS BCD_counter_comb;
 
---ze signalu na vystup   
-CNT_0 <= STD_LOGIC_VECTOR(cnt_0_reg);
-CNT_1 <= STD_LOGIC_VECTOR(cnt_1_reg);
-CNT_2 <= STD_LOGIC_VECTOR(cnt_2_reg);
-CNT_3 <= STD_LOGIC_VECTOR(cnt_3_reg);
+
 
 ----------------------------------------------------------------------------------
 end Behavioral;
