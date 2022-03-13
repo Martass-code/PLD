@@ -1,2 +1,4 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/marta/Documents/PLD/Stopwatch/SOURCES/stopwatch.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'stopwatch'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/marta/Documents/PLD/Stopwatch/SOURCES/debouncer.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'debouncer'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/marta/Documents/PLD/Stopwatch/SOURCES/SIM/btn_in_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'btn_in_tb'

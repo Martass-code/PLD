@@ -10,16 +10,16 @@ architecture Behavioral of btn_in_tb is
 
   COMPONENT btn_in
   GENERIC(
-    DEB_PERIOD                  : POSITIVE := 3
+    DEB_PERIOD                  : POSITIVE := 20
   );
   PORT(
     clk                         : IN  STD_LOGIC;
     ce                          : IN  STD_LOGIC;
     btn                         : IN  STD_LOGIC;
     btn_debounced               : OUT STD_LOGIC;
-    btn_egde_pos                : OUT STD_LOGIC;
-    btn_egde_neg                : OUT STD_LOGIC;
-    btn_egde_any                : OUT STD_LOGIC
+    btn_edge_pos                : OUT STD_LOGIC;
+    btn_edge_neg                : OUT STD_LOGIC;
+    btn_edge_any                : OUT STD_LOGIC
   );
   END COMPONENT btn_in;
 
@@ -47,9 +47,9 @@ architecture Behavioral of btn_in_tb is
   SIGNAL ce                     : STD_LOGIC;
   SIGNAL btn                    : STD_LOGIC := '0';
   SIGNAL btn_debounced          : STD_LOGIC;
-  SIGNAL btn_egde_pos           : STD_LOGIC;
-  SIGNAL btn_egde_neg           : STD_LOGIC;
-  SIGNAL btn_egde_any           : STD_LOGIC;
+  SIGNAL btn_edge_pos           : STD_LOGIC;
+  SIGNAL btn_edge_neg           : STD_LOGIC;
+  SIGNAL btn_edge_any           : STD_LOGIC;
 
 ----------------------------------------------------------------------------------
 BEGIN
@@ -87,9 +87,9 @@ BEGIN
     ce                          => ce,
     btn                         => btn,
     btn_debounced               => btn_debounced,
-    btn_egde_pos                => btn_egde_pos,
-    btn_egde_neg                => btn_egde_neg,
-    btn_egde_any                => btn_egde_any
+    btn_edge_pos                => btn_edge_pos,
+    btn_edge_neg                => btn_edge_neg,
+    btn_edge_any                => btn_edge_any
   );
 
   --------------------------------------------------------------------------------
