@@ -1,0 +1,4 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/marta/Documents/PLD/CV_03_demo/SOURCES/simple_adder.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'simple_adder'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/marta/Documents/PLD/CV_03_demo/SOURCES/simple_adder_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'simple_adder_tb'

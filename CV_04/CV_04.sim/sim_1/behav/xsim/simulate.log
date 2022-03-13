@@ -1,0 +1,16 @@
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+Note: ==== Checking count enable (CE) and count up (CNT_UP = '1') functionality...
+Time: 20 ns  Iteration: 0  Process: /cnt_bin_tb/line__64  File: C:/Users/marta/Documents/PLD/CV_04/SOURCES/cnt_bin_tb.vhd
+Note: ==== Checking reset (SRST) functionality...
+Time: 2220 ns  Iteration: 0  Process: /cnt_bin_tb/line__64  File: C:/Users/marta/Documents/PLD/CV_04/SOURCES/cnt_bin_tb.vhd
+Note: ==== Checking count enable (CE) and count down (CNT_UP = '0') functionality...
+Time: 2440 ns  Iteration: 0  Process: /cnt_bin_tb/line__64  File: C:/Users/marta/Documents/PLD/CV_04/SOURCES/cnt_bin_tb.vhd
+Note: ==== Checking load (CNT_LOAD) functionality...
+Time: 4640 ns  Iteration: 0  Process: /cnt_bin_tb/line__64  File: C:/Users/marta/Documents/PLD/CV_04/SOURCES/cnt_bin_tb.vhd
+Note: 
+================================================================
+Simulation PASSED (no erros)!
+================================================================
+
+Time: 4660 ns  Iteration: 0  Process: /cnt_bin_tb/line__64  File: C:/Users/marta/Documents/PLD/CV_04/SOURCES/cnt_bin_tb.vhd
