@@ -50,9 +50,9 @@ begin
   END PROCESS;  
   
   edge_detector_comb : PROCESS(sig_in, btn_delayed, btn_pressed) BEGIN
-    edge_pos <= '0';
-    edge_neg <= '0';
-    edge_any <= '0';
+    edge_pos <= '0';--zamezeni latch
+    edge_neg <= '0';--zamezeni latch
+    edge_any <= '0';--zamezeni latch
     
     --generuje pulz o sirce 1 periody pri stisku a pusteni tlacitka
     --neni tam vpodstate zadne zpozdeni

@@ -36,7 +36,62 @@ ARCHITECTURE Structural OF rp_top IS
   SIGNAL cnt_1              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
   SIGNAL cnt_2              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
   SIGNAL cnt_3              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
+  
+  ------------------------------------------------------------------------------
+  -- clock enable generator
+  COMPONENT ce_gen 
+    GENERIC (
+      --konstanta nastavitelna pri instanci
+      DIV_FACT  : POSITIVE := 2  --clock division factor
+    );
+    PORT (
+      clk       : IN  STD_LOGIC;  --clock signal
+      srst  : IN STD_LOGIC;  --synchronous reset
+      ce_in  : IN STD_LOGIC;  --input clock enable
+      ce_out     : OUT STD_LOGIC  --clock enable output
+    );
+  END COMPONENT ce_gen;  
+  ------------------------------------------------------------------------------
+  
+  SIGNAL ce_100hz : STD_LOGIC := '0';
 
+  ------------------------------------------------------------------------------
+  -- button input module
+  COMPONENT btn_in 
+    GENERIC(
+      DEB_PERIOD  : POSITIVE := 20
+    );
+    Port ( clk : in STD_LOGIC;
+           ce : in STD_LOGIC;
+           btn : in STD_LOGIC;
+           btn_debounced : out STD_LOGIC;
+           btn_edge_pos : out STD_LOGIC;
+           btn_edge_neg : out STD_LOGIC;
+           btn_edge_any : out STD_LOGIC
+           );
+  END COMPONENT btn_in;
+  ------------------------------------------------------------------------------
+  
+  ------------------------------------------------------------------------------
+  -- stopwatch module (4-decade BCD counter)
+  COMPONENT stopwatch 
+      Port ( CLK : in STD_LOGIC;
+             CE_100HZ : in STD_LOGIC;
+             CNT_ENABLE : in STD_LOGIC;
+             DISP_ENABLE : in STD_LOGIC;
+             CNT_RESET : in STD_LOGIC;
+             CNT_0 : out STD_LOGIC_VECTOR (3 downto 0) := (OTHERS => '0');
+             CNT_1 : out STD_LOGIC_VECTOR (3 downto 0) := (OTHERS => '0');
+             CNT_2 : out STD_LOGIC_VECTOR (3 downto 0) := (OTHERS => '0');
+             CNT_3 : out STD_LOGIC_VECTOR (3 downto 0) := (OTHERS => '0')
+             );
+  END COMPONENT stopwatch;  
+  ------------------------------------------------------------------------------
+  
+  ------------------------------------------------------------------------------
+  -- stopwatch control FSM
+  
+  ------------------------------------------------------------------------------  
 ----------------------------------------------------------------------------------
 BEGIN
 ----------------------------------------------------------------------------------
@@ -72,22 +127,56 @@ BEGIN
 
   --------------------------------------------------------------------------------
   -- clock enable generator
-  
+  ce_gen_i : ce_gen
+  GENERIC MAP(
+    DIV_FACT => 500000
+  )
+  PORT MAP(
+    CLK => clk,
+    SRST => '0',
+    CE_IN => '1',
+    CE_OUT => ce_100hz 
+  );  
   
   
   --------------------------------------------------------------------------------
   -- button input module
-
+  gen_btn_in : FOR i IN 0 TO 3 GENERATE
+    btn_in_inst : btn_in
+    GENERIC MAP(
+      DEB_PERIOD => 20
+      )
+      PORT MAP(
+        clk => clk,          
+        ce => ce_100Hz,             
+        btn => btn(i),           
+        btn_debounced => btn_debounced(i), 
+        btn_edge_pos => btn_edge_pos(i),  
+        btn_edge_neg => btn_edge_neg(i),  
+        btn_edge_any => btn_edge_any(i)          		  		   
+ 	   );
+  END GENERATE gen_btn_in;
 
 
   --------------------------------------------------------------------------------
   -- stopwatch module (4-decade BCD counter)
-
+  stopwatch_i : stopwatch 
+      Port ( CLK 
+             CE_100HZ <= ce_100hz, 
+             CNT_ENABLE <= , 
+             DISP_ENABLE <= ,
+             CNT_RESET <= ,
+             CNT_0 <= cnt_0,
+             CNT_1 <= cnt_1,
+             CNT_2 <= cnt_2,
+             CNT_3 <= cnt_3
+             );
+  END COMPONENT stopwatch;  
 
 
   --------------------------------------------------------------------------------
   -- stopwatch control FSM
-
+  
 
 
 ----------------------------------------------------------------------------------

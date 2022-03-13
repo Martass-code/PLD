@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 ----------------------------------------------------------------------------------
 entity btn_in is
     GENERIC(
-      DEB_PERIOD  : POSITIVE := 3
+      DEB_PERIOD  : POSITIVE := 20
     );
     Port ( clk : in STD_LOGIC;
            ce : in STD_LOGIC;
