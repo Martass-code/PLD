@@ -15,7 +15,7 @@ END rp_top;
 ----------------------------------------------------------------------------------
 ARCHITECTURE Structural OF rp_top IS
 ----------------------------------------------------------------------------------
-
+    
   COMPONENT seg_disp_driver
   PORT(
     clk             : IN  STD_LOGIC;
@@ -72,6 +72,12 @@ ARCHITECTURE Structural OF rp_top IS
   END COMPONENT btn_in;
   ------------------------------------------------------------------------------
   
+  SIGNAL btn : STD_LOGIC_VECTOR(3 DOWNTO 0);
+  SIGNAL btn_edge_pos : STD_LOGIC_VECTOR(3 DOWNTO 0);  
+  --SIGNAL btn_edge_neg(i) : STD_LOGIC_VECTOR;  
+  --SIGNAL btn_edge_any(i) : STD_LOGIC_VECTOR;     
+ 
+  
   ------------------------------------------------------------------------------
   -- stopwatch module (4-decade BCD counter)
   COMPONENT stopwatch 
@@ -87,15 +93,25 @@ ARCHITECTURE Structural OF rp_top IS
              );
   END COMPONENT stopwatch;  
   ------------------------------------------------------------------------------
+  SIGNAL cnt_enable  : STD_LOGIC := '0';
+  SIGNAL disp_enable : STD_LOGIC := '1';
+  SIGNAL cnt_reset   : STD_LOGIC := '1';
   
   ------------------------------------------------------------------------------
   -- stopwatch control FSM
-  
+  COMPONENT stopwatch_fsm 
+    Port ( clk : in STD_LOGIC;
+           btn_SS : in STD_LOGIC;
+           btn_LC : in STD_LOGIC;
+           cnt_enable : out STD_LOGIC;
+           disp_enable : out STD_LOGIC;
+           cnt_reset : out STD_LOGIC);
+  END COMPONENT stopwatch_fsm;
   ------------------------------------------------------------------------------  
 ----------------------------------------------------------------------------------
 BEGIN
 ----------------------------------------------------------------------------------
-
+  
   --------------------------------------------------------------------------------
   -- display driver
   --
@@ -149,11 +165,11 @@ BEGIN
       PORT MAP(
         clk => clk,          
         ce => ce_100Hz,             
-        btn => btn(i),           
-        btn_debounced => btn_debounced(i), 
+        btn => btn_i(i),           
+        btn_debounced => OPEN, --btn_debounced(i), 
         btn_edge_pos => btn_edge_pos(i),  
-        btn_edge_neg => btn_edge_neg(i),  
-        btn_edge_any => btn_edge_any(i)          		  		   
+        btn_edge_neg => OPEN, --btn_edge_neg(i),  
+        btn_edge_any => OPEN --btn_edge_any(i)          		  		   
  	   );
   END GENERATE gen_btn_in;
 
@@ -161,21 +177,29 @@ BEGIN
   --------------------------------------------------------------------------------
   -- stopwatch module (4-decade BCD counter)
   stopwatch_i : stopwatch 
-      Port ( CLK 
-             CE_100HZ <= ce_100hz, 
-             CNT_ENABLE <= , 
-             DISP_ENABLE <= ,
-             CNT_RESET <= ,
-             CNT_0 <= cnt_0,
-             CNT_1 <= cnt_1,
-             CNT_2 <= cnt_2,
-             CNT_3 <= cnt_3
-             );
-  END COMPONENT stopwatch;  
+    PORT MAP ( CLK => clk,
+               CE_100HZ => ce_100hz, 
+               CNT_ENABLE => cnt_enable, 
+               DISP_ENABLE => disp_enable,
+               CNT_RESET => cnt_reset,
+               CNT_0 => cnt_0,
+               CNT_1 => cnt_1,
+               CNT_2 => cnt_2,
+               CNT_3 => cnt_3
+  );
+   
 
 
   --------------------------------------------------------------------------------
   -- stopwatch control FSM
+  stopwatch_fsm_i : stopwatch_fsm 
+    PORT MAP ( clk => clk,
+               btn_SS => btn_edge_pos(0), --BTN[0]
+               btn_LC => btn_edge_pos(2), --BTN[2]
+               cnt_enable => cnt_enable,
+               disp_enable => disp_enable,
+               cnt_reset => cnt_reset
+  );
   
 
 

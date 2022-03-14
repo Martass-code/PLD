@@ -1,0 +1,20 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Mar 14 09:19:48 2022
+# Process ID: 26108
+# Current directory: C:/Users/marta/Documents/PLD/CV_03_demo
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent9636 C:\Users\marta\Documents\PLD\CV_03_demo\CV_03_demo.xpr
+# Log file: C:/Users/marta/Documents/PLD/CV_03_demo/vivado.log
+# Journal file: C:/Users/marta/Documents/PLD/CV_03_demo\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/marta/Documents/PLD/CV_03_demo/CV_03_demo.xpr
+WARNING: [filemgmt 56-3] Default IP Output Path : Could not find the directory 'C:/Users/marta/Documents/PLD/CV_03_demo/CV_03_demo.gen/sources_1'.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2020.2/data/ip'.
+update_compile_order -fileset sources_1
