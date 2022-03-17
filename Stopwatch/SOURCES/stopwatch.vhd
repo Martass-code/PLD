@@ -62,7 +62,7 @@ BEGIN
   END IF;
 END PROCESS BCD_counter_REG;
 
-BCD_counter_comb: PROCESS (cnt_0_reg, cnt_1_reg, CE_100HZ)
+BCD_counter_comb: PROCESS (cnt_0_reg, cnt_1_reg, cnt_2_reg, cnt_3_reg, CNT_ENABLE, CE_100HZ)
 BEGIN
   cnt_0_next <= cnt_0_reg; --zamezeni latch
   cnt_1_next <= cnt_1_reg; --zamezeni latch

@@ -12,3 +12,4 @@
 start_gui
 open_project C:/Users/marta/Documents/PLD/CV_03_demo/CV_03_demo.xpr
 update_compile_order -fileset sources_1
+open_run impl_1

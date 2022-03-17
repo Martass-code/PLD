@@ -30,12 +30,8 @@ ARCHITECTURE Structural OF rp_top IS
   );
   END COMPONENT seg_disp_driver;
 
-  ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------  
 
-  SIGNAL cnt_0              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
-  SIGNAL cnt_1              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
-  SIGNAL cnt_2              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
-  SIGNAL cnt_3              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
   
   ------------------------------------------------------------------------------
   -- clock enable generator
@@ -52,8 +48,7 @@ ARCHITECTURE Structural OF rp_top IS
     );
   END COMPONENT ce_gen;  
   ------------------------------------------------------------------------------
-  
-  SIGNAL ce_100hz : STD_LOGIC := '0';
+
 
   ------------------------------------------------------------------------------
   -- button input module
@@ -70,12 +65,7 @@ ARCHITECTURE Structural OF rp_top IS
            btn_edge_any : out STD_LOGIC
            );
   END COMPONENT btn_in;
-  ------------------------------------------------------------------------------
-  
-  SIGNAL btn : STD_LOGIC_VECTOR(3 DOWNTO 0);
-  SIGNAL btn_edge_pos : STD_LOGIC_VECTOR(3 DOWNTO 0);  
-  --SIGNAL btn_edge_neg(i) : STD_LOGIC_VECTOR;  
-  --SIGNAL btn_edge_any(i) : STD_LOGIC_VECTOR;     
+  ------------------------------------------------------------------------------ 
  
   
   ------------------------------------------------------------------------------
@@ -93,9 +83,7 @@ ARCHITECTURE Structural OF rp_top IS
              );
   END COMPONENT stopwatch;  
   ------------------------------------------------------------------------------
-  SIGNAL cnt_enable  : STD_LOGIC := '0';
-  SIGNAL disp_enable : STD_LOGIC := '1';
-  SIGNAL cnt_reset   : STD_LOGIC := '1';
+
   
   ------------------------------------------------------------------------------
   -- stopwatch control FSM
@@ -108,6 +96,28 @@ ARCHITECTURE Structural OF rp_top IS
            cnt_reset : out STD_LOGIC);
   END COMPONENT stopwatch_fsm;
   ------------------------------------------------------------------------------  
+  
+  
+  --pro propojeni z ce_gen na stopwatch a btn_in
+  SIGNAL ce_100hz : STD_LOGIC := '0';
+  
+  --pro propojeni z btn_in na stopwatch_fsm
+  --SIGNAL btn : STD_LOGIC_VECTOR(3 DOWNTO 0); --asi se nepouziva
+  SIGNAL btn_edge_pos : STD_LOGIC_VECTOR(3 DOWNTO 0); --v obrazku oznaceno jako btn_SS a btn_LC 
+  --SIGNAL btn_edge_neg(i) : STD_LOGIC_VECTOR(3 DOWNTO 0); 
+  --SIGNAL btn_edge_any(i) : STD_LOGIC_VECTOR(3 DOWNTO 0);   
+  
+  --pro propojeni z stopwatch_fsm na stopwatch
+  --pocatecni hodnoty asi nejsou potreba
+  SIGNAL cnt_enable  : STD_LOGIC := '0';
+  SIGNAL disp_enable : STD_LOGIC := '1';
+  SIGNAL cnt_reset   : STD_LOGIC := '1';
+  
+  --pro propojeni z stopwatch na display driver
+  SIGNAL cnt_0              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
+  SIGNAL cnt_1              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
+  SIGNAL cnt_2              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
+  SIGNAL cnt_3              : STD_LOGIC_VECTOR( 3 DOWNTO 0);
 ----------------------------------------------------------------------------------
 BEGIN
 ----------------------------------------------------------------------------------
@@ -152,8 +162,7 @@ BEGIN
     SRST => '0',
     CE_IN => '1',
     CE_OUT => ce_100hz 
-  );  
-  
+  );    
   
   --------------------------------------------------------------------------------
   -- button input module
@@ -173,7 +182,6 @@ BEGIN
  	   );
   END GENERATE gen_btn_in;
 
-
   --------------------------------------------------------------------------------
   -- stopwatch module (4-decade BCD counter)
   stopwatch_i : stopwatch 
@@ -186,9 +194,7 @@ BEGIN
                CNT_1 => cnt_1,
                CNT_2 => cnt_2,
                CNT_3 => cnt_3
-  );
-   
-
+  ); 
 
   --------------------------------------------------------------------------------
   -- stopwatch control FSM
@@ -199,8 +205,7 @@ BEGIN
                cnt_enable => cnt_enable,
                disp_enable => disp_enable,
                cnt_reset => cnt_reset
-  );
-  
+  ); 
 
 
 ----------------------------------------------------------------------------------
